@@ -1,0 +1,13 @@
+<<<<<<< HEAD
+streamlit
+transformers
+torch
+sentencepiece
+accelerate
+=======
+streamlit
+transformers
+torch
+sentencepiece
+accelerate
+>>>>>>> 4ff2cbcd033f56d70452df7079596b56d071fc78
