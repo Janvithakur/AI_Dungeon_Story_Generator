@@ -1,13 +1,12 @@
 import streamlit as st
-from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
 import io
 
 # Load pretrained GPT-2 model and tokenizer from Hugging Face
-model_name = "gpt2"  # You can change to 'EleutherAI/gpt-neo-125M' if you prefer GPT-Neo
+model_name = "gpt2"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
-generator = pipeline("text-generation", model=model, tokenizer=tokenizer, device=-1)
 
 # Streamlit app title and description
 st.title("📝 AI Dungeon Story Generator")
@@ -32,7 +31,7 @@ def generate_story(prompt):
     outputs = model.generate(
         inputs, 
         max_length=300, 
-        num_return_sequences=3,  # You can increase this for more options
+        num_return_sequences=3,
         do_sample=True, 
         temperature=0.7, 
         top_p=0.9
@@ -50,7 +49,6 @@ if st.button("Generate Story"):
     if prompt.strip() == "":
         st.error("Please enter a prompt!")
     else:
-        # Generate and display story options
         story_options = generate_story(full_prompt)
         
         for i, story in enumerate(story_options):
