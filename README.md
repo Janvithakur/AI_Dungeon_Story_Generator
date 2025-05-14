@@ -3,6 +3,9 @@
 🌎Live Project:🌍
 
 💎 https://ai-dungeon-app-btfcy6tewxd4hk34guw7c2.streamlit.app/
+  or
+  simply open Command Prompt and type
+  streamlit run app.py
 
 
 An interactive AI-powered story generator built using Streamlit and Hugging Face's GPT-2 model.
