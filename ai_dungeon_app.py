@@ -1,5 +1,5 @@
 import streamlit as st
-from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers import pipeline, AutoModelForCausalLM, AutoTokenizer
 import torch
 import io
 
@@ -7,6 +7,7 @@ import io
 model_name = "gpt2"  # You can change to 'EleutherAI/gpt-neo-125M' if you prefer GPT-Neo
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = AutoModelForCausalLM.from_pretrained(model_name)
+generator = pipeline("text-generation", model=model, tokenizer=tokenizer, device=-1)
 
 # Streamlit app title and description
 st.title("📝 AI Dungeon Story Generator")
