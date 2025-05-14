@@ -1,7 +1,7 @@
 # AI Dungeon Story Generator
 
 Live Project:
-https://aidungeonstorygenerator-kz3fmnzjmwajnrjkw9bfrx.streamlit.app/
+https://ai-dungeon-app-btfcy6tewxd4hk34guw7c2.streamlit.app/
 
 
 An interactive AI-powered story generator built using Streamlit and Hugging Face's GPT-2 model.
