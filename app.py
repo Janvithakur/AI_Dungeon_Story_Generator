@@ -1,65 +1,72 @@
-# Title and genre select
 import streamlit as st
-from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
-import datetime
+from transformers import AutoModelForCausalLM, AutoTokenizer
 import torch
+import io
 
-# Set seed for reproducibility
-torch.manual_seed(42)
+# Load pretrained GPT-2 model and tokenizer from Hugging Face
 
-st.title("🧙‍♂️ AI Dungeon Story Generator")
+model\_name = "gpt2"
+tokenizer = AutoTokenizer.from\_pretrained(model\_name)
+model = AutoModelForCausalLM.from\_pretrained(model\_name)
 
-# Genre selection
-genres = ['Fantasy', 'Mystery', 'Sci-Fi', 'Adventure']
-genre = st.selectbox("Choose a genre:", genres)
+# Streamlit app title and description
 
-# Prompt input
-prompt = st.text_area("Enter your story prompt:", height=150)
+st.title("📝 AI Dungeon Story Generator")
+st.markdown("""
+Enter your prompt and select a genre to create your interactive fantasy story!
+The AI will generate multiple story continuations for you to explore.
+""")
 
-# Story length slider
-max_len = st.slider("Select story length (tokens):", min_value=50, max_value=300, value=150)
+# Prompt input field
 
-# Load GPT-2 model and tokenizer
-model_name = "gpt2"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name)
+prompt = st.text\_area("Enter your story prompt:")
 
-generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
+# Genre selection dropdown
 
-def generate_story(prompt, max_length=150):
-    result = generator(prompt, max_length=max_length, num_return_sequences=3, do_sample=True)
-    return result
+genre = st.selectbox("Choose a Genre:", \["Fantasy", "Mystery", "Sci-Fi", "Adventure"])
 
-def save_story(text):
-    filename = f"story_{datetime.datetime.now().strftime('%Y%m%d_%H%M%S')}.txt"
-    with open(filename, "w", encoding="utf-8") as file:
-        file.write(text)
-    return filename
+# Full prompt with genre
 
-# Generate Story button
+full\_prompt = f"{genre} Story:\n{prompt}"
+
+# Function to generate story continuations
+
+def generate\_story(prompt):
+inputs = tokenizer.encode(prompt, return\_tensors="pt")
+
+```
+outputs = model.generate(
+    inputs, 
+    max_length=300, 
+    num_return_sequences=3,
+    do_sample=True, 
+    temperature=0.7, 
+    top_p=0.9
+)
+
+story_options = []
+for output in outputs:
+    story = tokenizer.decode(output, skip_special_tokens=True)
+    story_options.append(story)
+
+return story_options
+```
+
+# Button to generate the story
+
 if st.button("Generate Story"):
-    if prompt:
-        st.subheader("Story Continuations:")
-        full_prompt = f"{genre} story: {prompt}"
-        outputs = generate_story(full_prompt, max_length=max_len)
+if prompt.strip() == "":
+st.error("Please enter a prompt!")
+else:
+story\_options = generate\_story(full\_prompt)
 
-        # Store generated outputs
-        generated_texts = []
-        for i, output in enumerate(outputs):
-            story = output['generated_text']
-            generated_texts.append(story)
-            st.text_area(f"Option {i+1}:", value=story, height=200)
+```
+    for i, story in enumerate(story_options):
+        st.subheader(f"Option {i+1}")
+        st.write(story)
 
-        # Save generated stories in session state
-        st.session_state["generated_texts"] = generated_texts
-    else:
-        st.warning("Please enter a prompt before generating a story.")
-
-# Save Story button
-if st.button("Save Story"):
-    if "generated_texts" in st.session_state:
-        all_text = "\n\n".join([f"Option {i+1}:\n{text}" for i, text in enumerate(st.session_state["generated_texts"])])
-        filename = save_story(all_text)
-        st.success(f"Story saved as {filename}")
-    else:
-        st.warning("Please generate a story before saving.")
+    # Allow users to download the generated story
+    story_text = "\n\n".join(story_options)
+    story_file = io.StringIO(story_text)
+    st.download_button("Download All Stories", story_file, file_name="generated_story.txt")
+```
