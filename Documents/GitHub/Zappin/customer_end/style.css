@@ -1,0 +1,102 @@
+body {
+  margin: 0;
+  font-family: sans-serif;
+  background: #f9f9f9;
+}//a
+
+.navbar {
+  background: #333;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.profile-btn {
+  background: #555;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.top-controls {
+  text-align: center;
+  padding: 10px;
+}
+
+.top-controls select {
+  padding: 6px 10px;
+}
+
+.sidebar {
+  width: 180px;
+  float: left;
+  background: #eee;
+  padding: 10px;
+  min-height: 500px;
+}
+
+.sidebar button {
+  display: block;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 8px;
+  background: #ddd;
+  border: none;
+  cursor: pointer;
+}
+
+.product-list {
+  margin-left: 200px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.product-card {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  width: 150px;
+  border-radius: 8px;
+}
+
+.product-card img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.product-card button {
+  padding: 6px 10px;
+  font-size: 12px;
+  margin: 3px 3px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.like-btn {
+  background-color: #f44336;
+  color: white;
+}
+
+.add-btn {
+  background-color: #ff9800;
+  color: white;
+}
+
+.buy-btn {
+  background-color: #4caf50;
+  color: white;
+}

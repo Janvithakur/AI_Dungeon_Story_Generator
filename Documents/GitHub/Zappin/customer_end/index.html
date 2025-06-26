@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Zappin</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+//d
+  <div class="navbar">
+    <h1>Zappin</h1>
+    <input type="text" id="searchInput" placeholder="Search products...">
+    <button class="profile-btn" onclick="logout()">👤 Profile</button>
+  </div>
+
+  <div class="top-controls">
+    <label for="categorySelect">Show Categories: </label>
+    <select id="categorySelect" onchange="filterCategory()">
+      <option value="all">All</option>
+      <option value="TANDOOR">Tandoor</option>
+      <option value="COLD DRINKS">Cold Drinks</option>
+      <option value="CHINESE">Chinese</option>
+    </select>
+  </div>
+
+  <div class="sidebar">
+    <button onclick="filterCategory('all')">All</button>
+    <button onclick="filterCategory('TANDOOR')">Tandoor</button>
+    <button onclick="filterCategory('COLD DRINKS')">Cold Drinks</button>
+    <button onclick="filterCategory('CHINESE')">Chinese</button>
+  </div>
+
+  <div class="product-list" id="productList">
+    <!-- Product cards will load here -->
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
